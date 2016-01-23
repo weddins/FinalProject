@@ -14,9 +14,9 @@ saveSubset <- function(txtFile, propSave){
                                paste0(txtFile, ".csv")), row.names = FALSE)
 }
 
-saveSubset("en_US.blogs.txt", 0.09)
-saveSubset("en_US.news.txt", 0.09)
-saveSubset("en_US.twitter.txt", 0.09)
+saveSubset("en_US.blogs.txt", 0.05)
+saveSubset("en_US.news.txt", 0.05)
+saveSubset("en_US.twitter.txt", 0.05)
 
 #Preprocess the files
 #Create corpus
@@ -55,7 +55,7 @@ best.model.logLik <- as.data.frame(as.matrix(lapply(best.model, logLik)))
 best.model.logLik.df <- data.frame(topics=c(3, 6, 9, 12, 15),
     LL=as.numeric(as.matrix(best.model.logLik)))
 
-png("Topics.png")
+png("Topics.png", width = 300, height = 240)
 ggplot(best.model.logLik.df, aes(x=topics, y=LL)) +
   xlab("Number of topics") + ylab("Log likelihood of the model") +
   geom_line() +
@@ -66,7 +66,9 @@ dev.off()
 #Plot above indicates 6 topics
 best.model.logLik.df[which.max(best.model.logLik.df$LL),]
 # topics        LL
-# 2      6 -27065909
+# 2      6 -27065909 at 9%
+# topics        LL
+# 2      6 -15027614 at 5%
 lda_Internet <- LDA(dtm, 6) # generate the model with 6 topics
 get_terms(lda_Internet, 5) # gets 5 keywords for each topic, just for a quick look
 # Topic 1  Topic 2 Topic 3 Topic 4 Topic 5 Topic 6
